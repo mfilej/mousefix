@@ -52,13 +52,13 @@
  *
  * This value should always be positive
  */
-static float accel_factor = 2.0;
+static float accel_factor = 1.0;
 
 /* Setting this value to '1' will enable use of the scaling table
  * Setting this value to '0' will disable use of the scaling table and
  * the values set for it shall be ignored
  */
-#define USE_SCALING_TABLE (1)
+#define USE_SCALING_TABLE (0)
 
 /* Scaling table. This controls the scaling relationship between mouse
  * movement and screen cursor movement
