@@ -2,6 +2,11 @@
 MouseFix
 --------
 
+Version 1.2.1 - 19/09/2009
+
+Updated mousefix so it will compile/run on 10.6 (Intel-only, sorry)
+- Allen "Chip" Parker - infowolfe+mousefix@gmail.com
+
 Version 1.2 - 20/08/2006
 
 Copyright (c) 2005 - Richard Bentley - mousefix@knockknock.org.uk

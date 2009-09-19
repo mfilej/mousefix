@@ -1,7 +1,9 @@
 /* -----------------------------------------------------------------
  * MouseFix
  *
- * Version 1.2 - 20/08/2006
+ * Version 1.2.1 - 19/09/2009
+ *
+ * Update for 10.6 IOKit, since NX* seem to be missing now.
  *
  * A program to disable/adjust the annoying mouse acceleration on Mac OS-X
  *
@@ -52,13 +54,13 @@
  *
  * This value should always be positive
  */
-static float accel_factor = 1.0;
+static float accel_factor = 2.0;
 
 /* Setting this value to '1' will enable use of the scaling table
  * Setting this value to '0' will disable use of the scaling table and
  * the values set for it shall be ignored
  */
-#define USE_SCALING_TABLE (0)
+#define USE_SCALING_TABLE (1)
 
 /* Scaling table. This controls the scaling relationship between mouse
  * movement and screen cursor movement
@@ -120,7 +122,7 @@ static const short scale[][2] =
  * 0 - OK - Mouse movement adjusted
  * 1 - Failed
  */
-int main(int argc, char** argv)
+int main(int argc, const char** argv)
 {
     int fail = 0;
 
@@ -144,8 +146,8 @@ int main(int argc, char** argv)
                    "              resulting in a simple, scaled linear mouse / cursor\n"
                    "              relationship (which, if you are using this, is\n"
                    "              probably what you want)\n\n"
-                   "By default, the mouse scaling table is disabled, resulting in\n"
-                   "a linear mouse/cursor relationship. To use the mouse scaling\n"
+                   "By default, the mouse scaling table is enabled, resulting in\n"
+                   "a non-linear mouse/cursor relationship. To stop using the mouse scaling\n"
                    "table, you will need to adjust the configuration in the code and\n"
                    "recompile\n\n");
             fail = 1;
@@ -186,7 +188,7 @@ int main(int argc, char** argv)
                     ms.scaleFactors[x] = scale[x][1];
                 }
 
-                NXSetMouseScaling(evs, &ms);
+				IOHIDSetMouseAcceleration(evs, &ms);
             }
             else
             {
@@ -197,7 +199,7 @@ int main(int argc, char** argv)
 #else
             /* Disable the mouse scaling table */
             ms.numScaleLevels = 0;
-            NXSetMouseScaling(evs, &ms);
+			IOHIDSetMouseAcceleration(evs, &ms);
 #endif
 
             /* Tidy up */
